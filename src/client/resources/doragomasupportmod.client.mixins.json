@@ -1,0 +1,17 @@
+{
+	"required": true,
+	"package": "com.dogoma.mixin.client",
+	"compatibilityLevel": "JAVA_21",
+	"client": [
+		"ExampleClientMixin",
+		"HandledScreenAccessor",
+		"HandledScreenMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"mixins": [
+		"ItemStackMixin",
+		"SlotMixin"
+	]
+}
