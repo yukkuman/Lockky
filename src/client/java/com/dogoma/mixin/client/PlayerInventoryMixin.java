@@ -1,4 +1,4 @@
 package com.dogoma.mixin.client;
 
-public class HandledScreenMixin {
+public class PlayerInventoryMixin {
 }
