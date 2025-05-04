@@ -5,13 +5,16 @@
 	"client": [
 		"ExampleClientMixin",
 		"HandledScreenAccessor",
-		"HandledScreenMixin"
+		"HandledScreenMixin",
+		"MinecraftClientMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
 	},
 	"mixins": [
 		"ItemStackMixin",
+		"PlayerInventoryMixin",
+		"ScreenHandlerMixin",
 		"SlotMixin"
 	]
 }

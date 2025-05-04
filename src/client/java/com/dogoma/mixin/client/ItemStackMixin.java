@@ -20,8 +20,8 @@ public class ItemStackMixin {
         ItemStack self = (ItemStack)(Object)this;
         int state = ClientLockRegistry.getLockState(self);
         switch (state) {
-            case 1 -> cir.getReturnValue().add(Text.literal("§6[ロック中]"));
-            case 2 -> cir.getReturnValue().add(Text.literal("§c[スタン中]"));
+            case 1 -> cir.getReturnValue().add(Text.literal("§6[セミロック中]"));
+            case 2 -> cir.getReturnValue().add(Text.literal("§c[ロック中]"));
         }
     }
 }
