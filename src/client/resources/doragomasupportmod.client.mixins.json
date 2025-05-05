@@ -1,17 +1,18 @@
 {
-	"required": true,
-	"package": "com.dogoma.mixin.client",
-	"compatibilityLevel": "JAVA_21",
-	"client": [
-		"HandledScreenAccessor",
-		"HandledScreenMixin",
-		"MinecraftClientMixin"
-	],
-	"injectors": {
-		"defaultRequire": 1
-	},
-	"mixins": [
-		"ItemStackMixin",
-		"ScreenHandlerMixin"
+  "required": true,
+  "package": "com.dogoma.mixin.client",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "ClientPlayNetworkHandlerMixin",
+    "HandledScreenAccessor",
+    "HandledScreenMixin",
+    "MinecraftClientMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "mixins": [
+    "ItemStackMixin",
+    "ScreenHandlerMixin"
 	]
 }

@@ -17,8 +17,6 @@ public class ScreenHandlerMixin {
     private void cancelDropLockedItem(int slotIndex, int button, SlotActionType actionType, PlayerEntity player, CallbackInfo ci) {
         ScreenHandler handler = (ScreenHandler)(Object)this;
 
-        System.out.println(slotIndex);
-
         // クリック対象がスロット内（slotIndex >= 0）の場合
         if (slotIndex >= 0 && slotIndex < handler.slots.size()) {
             Slot slot = handler.slots.get(slotIndex);
