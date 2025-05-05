@@ -1,4 +1,4 @@
-package com.dogoma;
+package com.dogoma.itemLock;
 
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;

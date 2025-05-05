@@ -1,4 +1,4 @@
-package com.dogoma;
+package com.dogoma.itemLock;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

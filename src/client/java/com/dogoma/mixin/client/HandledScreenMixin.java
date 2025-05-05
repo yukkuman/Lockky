@@ -1,16 +1,12 @@
 package com.dogoma.mixin.client;
 
-import com.dogoma.ClientLockRegistry;
-import com.dogoma.LockKeyHandler;
+import com.dogoma.itemLock.ClientLockRegistry;
+import com.dogoma.itemLock.LockKeyHandler;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.Drawable;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
-import net.minecraft.client.option.KeyBinding;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
-import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;

@@ -1,6 +1,6 @@
 package com.dogoma.mixin.client;
 
-import com.dogoma.ClientLockRegistry;
+import com.dogoma.itemLock.ClientLockRegistry;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;

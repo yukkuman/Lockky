@@ -1,8 +1,7 @@
 package com.dogoma.mixin.client;
 
-import com.dogoma.ClientLockRegistry;
+import com.dogoma.itemLock.ClientLockRegistry;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
