@@ -10,9 +10,11 @@ import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
+import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -21,7 +23,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(HandledScreen.class)
 public class HandledScreenMixin extends Screen {
 
-    public HandledScreenMixin(Text title) {
+    @Shadow protected int x;
+    @Shadow protected int y;
+
+    protected HandledScreenMixin(Text title) {
         super(title);
     }
 
@@ -61,28 +66,31 @@ public class HandledScreenMixin extends Screen {
     }
 
 
-    @Inject(method = "render", at = @At("TAIL"))
-    private void onRender(DrawContext context, int mouseX, int mouseY, float deltaTicks, CallbackInfo ci) {
-        HandledScreen<?> screen = (HandledScreen<?>) (Object) this;
+    @Inject(
+            method = "drawSlot",
+            at = @At("TAIL")
+    )
+    private void onDrawSlot(DrawContext context, Slot slot, CallbackInfo ci) {
 
-        for (Slot slot : screen.getScreenHandler().slots) {
-            int slotId = slot.id;
-            ItemStack item = screen.getScreenHandler().getSlot(slotId).getStack();
-            int state = ClientLockRegistry.getLockState(item);
-            if (state == 0) continue;
+        HandledScreen<?> screen = (HandledScreen<?>) (Object)this;
 
-            int x = slot.x + screen.width;
-            int y = slot.y + screen.height;
+        int slotId = slot.id;
+        int state = ClientLockRegistry.getLockState(screen.getScreenHandler().getSlot(slotId).getStack());
+        if (state == 0) return;
 
-            int color = switch (state) {
-                case 1 -> 0x80FFFF00; // 半透明黄色
-                case 2 -> 0x80FF0000;       // 半透明赤
-                default -> 0;
-            };
+        // スロットの座標
+        int left = slot.x;
+        int top = slot.y;
 
-            context.fill(x, y, x + 16, y + 16, color);
+        // 枠線の色（ARGB）
+        int color = switch (state) {
+            case 1 -> 0x80FFA500; // 薄いオレンジ（半透明）
+            case 2 -> 0x80FF0000;      // 薄い赤（半透明）
+            default -> 0;
+        };
 
-        }
+        // 1px の四角形を描く
+        context.fill(left, top, left + 16, top + 16, color);
     }
 
 

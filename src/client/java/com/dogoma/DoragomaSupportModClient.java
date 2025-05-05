@@ -6,5 +6,6 @@ public class DoragomaSupportModClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		LockKeyHandler.register();
+		ClientLockRegistry.load();
 	}
 }
