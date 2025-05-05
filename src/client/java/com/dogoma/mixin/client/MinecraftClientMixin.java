@@ -13,7 +13,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(MinecraftClient.class)
 public class MinecraftClientMixin {
 
-    @Inject(method = "handleInputEvents", at = @At("HEAD"))
+    @Inject(
+            method = "handleInputEvents",
+            at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/client/network/ClientPlayerEntity;dropSelectedItem(Z)Z"
+    ),
+            cancellable = true)
     private void onHandleInputEvents(CallbackInfo ci) {
         MinecraftClient client = MinecraftClient.getInstance();
 
@@ -25,7 +31,8 @@ public class MinecraftClientMixin {
 
                 if (lockState > 0) {
                     // ドロップをキャンセル
-                    client.options.dropKey.setPressed(false);
+
+                    ci.cancel();
 
                     // 任意：プレイヤーに通知
                     client.player.sendMessage(Text.literal("このアイテムはロック中のためドロップできません").formatted(Formatting.RED), true);

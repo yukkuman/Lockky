@@ -3,7 +3,6 @@
 	"package": "com.dogoma.mixin.client",
 	"compatibilityLevel": "JAVA_21",
 	"client": [
-		"ExampleClientMixin",
 		"HandledScreenAccessor",
 		"HandledScreenMixin",
 		"MinecraftClientMixin"
@@ -13,8 +12,6 @@
 	},
 	"mixins": [
 		"ItemStackMixin",
-		"PlayerInventoryMixin",
-		"ScreenHandlerMixin",
-		"SlotMixin"
+		"ScreenHandlerMixin"
 	]
 }
