@@ -23,5 +23,6 @@ public class ItemStackMixin {
             case 1 -> cir.getReturnValue().add(Text.literal("§6[セミロック中]"));
             case 2 -> cir.getReturnValue().add(Text.literal("§c[ロック中]"));
         }
+
     }
 }
