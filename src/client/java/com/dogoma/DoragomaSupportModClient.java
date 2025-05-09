@@ -1,5 +1,6 @@
 package com.dogoma;
 
+import com.dogoma.item.ItemHighlightManager;
 import com.dogoma.itemLock.ClientLockRegistry;
 import com.dogoma.itemLock.LockKeyHandler;
 import com.dogoma.partyUI.PartyHudRenderer;
@@ -12,10 +13,10 @@ public class DoragomaSupportModClient implements ClientModInitializer {
 	public void onInitializeClient() {
 		LockKeyHandler.register();
 		ClientLockRegistry.load();
+		ItemHighlightManager.register();
 
-		HudRenderCallback.EVENT.register((drawContext, tickDelta) -> {
-			PartyHudRenderer.render(drawContext, tickDelta);
-		});
+
+		HudRenderCallback.EVENT.register(PartyHudRenderer::render);
 
 	}
 }
