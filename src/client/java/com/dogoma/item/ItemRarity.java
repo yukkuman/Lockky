@@ -8,7 +8,7 @@ import java.util.List;
 
 public enum ItemRarity {
 
-    COMMON("コモン", 0, Formatting.WHITE),
+    COMMON("コモン", 0, Formatting.GRAY),
     UNCOMMON("至高", 1, Formatting.GREEN),
     RARE("レア", 2, Formatting.AQUA),
     LEGENDARY("伝説", 3, Formatting.YELLOW),

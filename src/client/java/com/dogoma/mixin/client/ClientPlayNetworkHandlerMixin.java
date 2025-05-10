@@ -1,15 +1,35 @@
 package com.dogoma.mixin.client;
 
+import com.dogoma.item.ItemHighlightManager;
+import com.dogoma.item.ItemRarity;
+import com.dogoma.item.ItemRarityChecker;
 import com.dogoma.partyUI.PartyTracker;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
+import net.minecraft.component.type.MapIdComponent;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.ItemEntity;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.item.map.MapState;
+import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.packet.CustomPayload;
+import net.minecraft.network.packet.s2c.common.CustomPayloadS2CPacket;
 import net.minecraft.network.packet.s2c.play.ChatMessageS2CPacket;
+import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
 import net.minecraft.network.packet.s2c.play.GameMessageS2CPacket;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 @Mixin(ClientPlayNetworkHandler.class)
@@ -52,6 +72,12 @@ public class ClientPlayNetworkHandlerMixin {
         // 自分が退出
         else if (raw.contains("あなたは") && raw.contains("のパーティーから退出しました。")) {
             PartyTracker.resetParty();
+        }
+
+        else if (raw.startsWith("パーティーの所有者")) {
+            String owner = raw.replace("パーティーの所有者:", "").trim();
+            PartyTracker.setLeader(owner);
+
         }
     }
 

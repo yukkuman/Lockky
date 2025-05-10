@@ -12,7 +12,8 @@
     "defaultRequire": 1
   },
   "mixins": [
+    "EntityAccessor",
     "ItemStackMixin",
     "ScreenHandlerMixin"
-	]
+  ]
 }
