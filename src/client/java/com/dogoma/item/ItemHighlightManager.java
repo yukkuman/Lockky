@@ -1,13 +1,8 @@
 package com.dogoma.item;
 
 import com.dogoma.mixin.client.EntityAccessor;
-import com.mojang.blaze3d.vertex.VertexFormat;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.BufferBuilder;
-import net.minecraft.client.render.VertexFormats;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.component.type.MapIdComponent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
@@ -19,23 +14,19 @@ import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.scoreboard.Team;
-import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
-import net.minecraft.util.math.Vec3d;
 import org.jetbrains.annotations.Nullable;
-import org.joml.Matrix4f;
 
-import java.awt.*;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Objects;
 
 import static com.dogoma.item.ItemRarityChecker.shouldHighlight;
 
 public class ItemHighlightManager {
 
     private static final Map<Integer, Integer> highlightTicks = new HashMap<>();
+    public static int growSec = 10;
 
     public static void register() {
         ClientTickEvents.END_CLIENT_TICK.register(ItemHighlightManager::onTick);
@@ -48,7 +39,7 @@ public class ItemHighlightManager {
             if (entity instanceof ItemEntity itemEntity) {
                 ItemStack stack = itemEntity.getStack();
                 if (!highlightTicks.containsKey(itemEntity.getId()) && shouldHighlight(stack)) {
-                    highlightTicks.put(itemEntity.getId(), 60);
+                    highlightTicks.put(itemEntity.getId(), growSec*20);
                     Item.TooltipContext context = new Item.TooltipContext() {
                         @Override
                         public @Nullable RegistryWrapper.WrapperLookup getRegistryLookup() {
@@ -77,9 +68,13 @@ public class ItemHighlightManager {
             Map.Entry<Integer, Integer> entry = iterator.next();
             if (entry.getValue()>0) continue;
             int id = entry.getKey();
-            iterator.remove();
-            if (client.world.getEntityById(id)==null) continue;
+            if (entry.getValue()==-1) {
+                highlightTicks.replace(id, 0);
+                continue;
+            }
             stopItemGlow((ItemEntity) client.world.getEntityById(id));
+            if (client.world.getEntityById(id)!=null) continue;
+            iterator.remove();
         }
     }
 
@@ -126,7 +121,7 @@ public class ItemHighlightManager {
         // クライアント側でのみ実行することを保証（呼び出し元で制御するか、ここでチェック）
         if (!itemEntity.getWorld().isClient) {
             // System.err.println("[ItemGlowMod] stopItemGlow should only be called on the client side.");
-            // return; // サーバーサイドで呼ばれた場合は何もしないか、エラーを出す
+            return; // サーバーサイドで呼ばれた場合は何もしないか、エラーを出す
         }
 
         try {
